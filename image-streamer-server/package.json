@@ -1,0 +1,22 @@
+{
+  "name": "image-streamer-server",
+  "version": "0.0.1",
+  "description": "Server that streams image chunks",
+  "type": "module",
+  "dependencies": {
+    "canvas": "^3.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "glob": "^11.0.1",
+    "sharp": "^0.33.5",
+    "socket.io": "^4.7.2"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
