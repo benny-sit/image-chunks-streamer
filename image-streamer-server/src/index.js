@@ -37,7 +37,6 @@ io.on('connection', (socket) => {
           return
         }
         const part = imagePieces.pop()
-        part.left = imagePieces.length
         socket.emit('draw', part)
       }
     }, 100)
