@@ -30,11 +30,11 @@ export default function Home() {
   const [receivedPieces, setReceivedPieces] = useState(0);
   const [totalChunks, setTotalChunks] = useState(0);
   const imageCanvasRef = useRef<HTMLCanvasElement>(null);
+  const imagePrefixRef = useRef("");
 
   useEffect(() => {
     if (!imageCanvasRef.current) return;
 
-    let imagePrefix = "";
     const incomingPieces: {
       x: number;
       y: number;
@@ -69,7 +69,7 @@ export default function Home() {
 
     function onDrawEvent(value: { x: number; y: number; data: string }) {
       const incomingImage = new Image();
-      incomingImage.src = imagePrefix + value.data;
+      incomingImage.src = imagePrefixRef.current + value.data;
 
       incomingImage.onload = () => {
         incomingPieces.push({ x: value.x, y: value.y, incomingImage });
@@ -77,14 +77,18 @@ export default function Home() {
       };
     }
 
-    function onChangeMetaDataEvent(value: {
-      prefix: string;
-      imageId: string;
-      numberOfChunks: number;
-    }) {
+    function onChangeMetaDataEvent(
+      value: {
+        prefix: string;
+        imageId: string;
+        numberOfChunks: number;
+      },
+      callback: Function
+    ) {
       setReceivedPieces(() => 0);
       setTotalChunks(value.numberOfChunks);
-      imagePrefix = value.prefix;
+      imagePrefixRef.current = value.prefix;
+      callback();
     }
 
     socket.on("connect", onConnect);
